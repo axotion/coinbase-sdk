@@ -8,19 +8,19 @@ export class NotificationVerifier {
 
     private publicKey: string = null;
 
-    async verify(response: Response) : Promise<void | never> {
+    async verify(request: Request) : Promise<void | never> {
 
         if(!this.publicKey) {
             this.publicKey = readFileSync(path.resolve('./key/coinbase.pub')).toString();
         }
 
-        const signatureToBeValidated = response.headers.get('CB-SIGNATURE')
+        const signatureToBeValidated = request.headers.get('CB-SIGNATURE')
 
         if (!signatureToBeValidated) {
             throw new MissingHeaderException('CB-SIGNATURE header is missing')
         }
 
-        const jsonBody = await response.json()
+        const jsonBody = await request.json()
         const bodyToBeValidated = JSON.stringify(jsonBody)
 
 

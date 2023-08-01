@@ -4,7 +4,7 @@ import {InvalidSignatureException} from "../../src/verifier/notification/excepti
 it('Should verify notification with valid signature in response', async () => {
 
     // https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/notifications#securing-callbacks
-    const mockedResponse = {
+    const mockedRequest = {
         status: 200,
         headers: {
             get: () => {
@@ -35,12 +35,12 @@ it('Should verify notification with valid signature in response', async () => {
     }
 
     const notificationVerifier = new NotificationVerifier();
-    await notificationVerifier.verify(mockedResponse as unknown as Response)
+    await notificationVerifier.verify(mockedRequest as unknown as Request)
 })
 
 it('Should throw error because of invalid signature in response', async () => {
 
-    const mockedResponse = {
+    const mockedRequest = {
         status: 200,
         headers: {
             get: () => {
@@ -73,7 +73,7 @@ it('Should throw error because of invalid signature in response', async () => {
     const notificationVerifier = new NotificationVerifier();
 
     try {
-        await notificationVerifier.verify(mockedResponse as unknown as Response)
+        await notificationVerifier.verify(mockedRequest as unknown as Request)
     } catch (exception) {
         expect(exception).toBeInstanceOf(InvalidSignatureException)
     }
