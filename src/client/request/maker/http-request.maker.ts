@@ -59,6 +59,7 @@ export class HttpRequestMaker implements RequestMakerInterface {
                 requestOptions['body'] = requestBody ? parseRequestBody(requestBody) : ''
             }
 
+            console.log(`${this.baseUrl}${path}`)
             const rawResponse = await fetch(`${this.baseUrl}${path}`, requestOptions)
             return await validateResponse(rawResponse) as T
         } catch (exception) {
