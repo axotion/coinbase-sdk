@@ -10,14 +10,16 @@ Coinbase SDK without external dependencies. Based purely on fetch API.
 - [x] High test coverage
 - [x] Easy of use and extendability
 
-## Requirements
-- NodeJS >= 18.0.0
-- API keys - https://www.coinbase.com/settings/api with permissions you need to use (e.g. wallet:accounts:read). Depends on what methods you want to use.
-
 ## Supported authentication methods
 
 - [x] API key
 - [ ] OAuth2
+
+
+## Requirements
+- NodeJS >= 18.0.0
+- API keys - https://www.coinbase.com/settings/api with permissions you need to use (e.g. wallet:accounts:read). Depends on what methods you want to use.
+
 
 ## Installation
 
