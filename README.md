@@ -18,13 +18,13 @@ Coinbase SDK without external dependencies. Based on fetch API.
 ## Installation
 
 ```bash
-TBA
+npm i coinbase-sdk
 ```
 
 ## Usage of Client
 
 ```typescript
-import { CoinbaseClient } from 'coinbase-sdk';
+import { CoinbaseClient, HttpRequestMaker } from 'coinbase-sdk';
 
 const coinbaseClient = new CoinbaseClient(
     new HttpRequestMaker(
