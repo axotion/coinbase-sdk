@@ -1,6 +1,6 @@
 # Coinbase SDK
 
-Coinbase SDK without external dependencies. Based on fetch API.
+Coinbase SDK without external dependencies. Based purely on fetch API.
 
 ## Features
 - [x] Typescript support
@@ -46,6 +46,7 @@ import { NotificationVerifier } from 'coinbase-sdk';
 const notificationVerifier = new NotificationVerifier();
 
 // Request from express / koa / pure nodejs
+// Will throw InvalidSignatureException if signature is invalid
 await notificationVerifier.verify(request)
 
 ```
