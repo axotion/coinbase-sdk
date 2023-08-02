@@ -17,7 +17,7 @@ Coinbase SDK without external dependencies. Based purely on fetch API.
 ## Supported authentication methods
 
 - [x] API key
-- [] OAuth2
+- [ ] OAuth2
 
 ## Installation
 
@@ -59,20 +59,20 @@ await notificationVerifier.verify(request)
 
 - [x] accounts
 - [x] addresses
-- [] buys
-- [] checkouts
-- [] current_user
-- [] deposits
-- [] notifications
-- [] orders
-- [] payment_methods
-- [] prices
-- [] reports
-- [] sells
-- [] transactions
-- [] transfers
-- [] users
-- [] withdrawals
+- [ ] buys
+- [ ] checkouts
+- [ ] current_user
+- [ ] deposits
+- [ ] notifications
+- [ ] orders
+- [ ] payment_methods
+- [ ] prices
+- [ ] reports
+- [ ] sells
+- [ ] transactions
+- [ ] transfers
+- [ ] users
+- [ ] withdrawals
 - [x] exchange_rates
 
 ## How to run tests
