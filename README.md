@@ -68,6 +68,7 @@ await notificationVerifier.verify(request)
 - [] transfers
 - [] users
 - [] withdrawals
+- [x] exchange_rates
 
 ## How to run tests
 ```bash
