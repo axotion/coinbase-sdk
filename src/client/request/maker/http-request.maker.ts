@@ -32,7 +32,23 @@ export class HttpRequestMaker implements RequestMakerInterface {
         this.apiSecret = apiSecret;
     }
 
-    async makeRequest<T>(path: string, method: keyof typeof HttpMethod, requestBody: any, paginationQuery?: PaginateQuery): Promise<T> {
+    async create<T>(path: string, requestBody: any): Promise<T> {
+        return this.makeRequest<T>(path, HttpMethod.POST, requestBody)
+    }
+
+    async read<T>(path: string, paginationQuery?: PaginateQuery): Promise<T> {
+        return this.makeRequest<T>(path, HttpMethod.GET, null, paginationQuery)
+    }
+
+    async update<T>(path: string, requestBody: any): Promise<T> {
+        return this.makeRequest<T>(path, HttpMethod.PUT, requestBody)
+    }
+
+    async delete<T>(path: string): Promise<T> {
+        return this.makeRequest<T>(path, HttpMethod.DELETE, null)
+    }
+
+    private async makeRequest<T>(path: string, method: keyof typeof HttpMethod, requestBody: any, paginationQuery?: PaginateQuery): Promise<T> {
         const currentTimestamp = getCurrentTimestamp()
 
         if (paginationQuery) {
@@ -59,7 +75,6 @@ export class HttpRequestMaker implements RequestMakerInterface {
                 requestOptions['body'] = requestBody ? parseRequestBody(requestBody) : ''
             }
 
-            console.log(`${this.baseUrl}${path}`)
             const rawResponse = await fetch(`${this.baseUrl}${path}`, requestOptions)
             return await validateResponse(rawResponse) as T
         } catch (exception) {

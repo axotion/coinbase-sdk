@@ -1,6 +1,5 @@
 import {DataResponse} from "./response/payload/common/data.response";
 import {AddressResponse} from "./response/payload/address/address.response";
-import {HttpMethod} from "../shared/http/http-method";
 import {PaginatedDataResponse} from "./response/payload/common/paginated-data.response";
 import {AccountResponse} from "./response/payload/account/account.response";
 import {PaginateQuery} from "./request/query/paginate.query";
@@ -16,31 +15,31 @@ export class CoinbaseClient {
     }
 
     async getExchangeRates(currency: string): Promise<DataResponse<ExchangeRateResponse>> {
-        return this.requestMaker.makeRequest<DataResponse<any>>(`/v2/exchange-rates?currency=${currency}`, HttpMethod.GET, null)
+        return this.requestMaker.read<DataResponse<ExchangeRateResponse>>(`/v2/exchange-rates?currency=${currency}`)
     }
 
     async getAccounts(paginateQuery?: PaginateQuery): Promise<PaginatedDataResponse<AccountResponse[]>> {
-        return this.requestMaker.makeRequest<Promise<PaginatedDataResponse<AccountResponse[]>>>(`/v2/accounts`, HttpMethod.GET, null, paginateQuery)
+        return this.requestMaker.read<Promise<PaginatedDataResponse<AccountResponse[]>>>(`/v2/accounts`, paginateQuery)
     }
 
     async getAccount(accountId: string): Promise<DataResponse<AccountResponse>> {
-        return this.requestMaker.makeRequest<Promise<DataResponse<AccountResponse>>>(`/v2/accounts/${accountId}`, HttpMethod.GET, null)
+        return this.requestMaker.read<Promise<DataResponse<AccountResponse>>>(`/v2/accounts/${accountId}`)
     }
 
     async updateAccount(accountId: string, name: string): Promise<DataResponse<AccountResponse>> {
-        return this.requestMaker.makeRequest<Promise<DataResponse<AccountResponse>>>(`/v2/accounts/${accountId}`, HttpMethod.PUT, {name: name})
+        return this.requestMaker.update<Promise<DataResponse<AccountResponse>>>(`/v2/accounts/${accountId}`, {name: name})
     }
 
     async deleteAccount(accountId: string): Promise<void> {
-        return this.requestMaker.makeRequest(`/v2/accounts/${accountId}`, HttpMethod.DELETE, null)
+        return this.requestMaker.delete(`/v2/accounts/${accountId}`)
     }
 
     async createAddress(accountId: string, name?: string): Promise<DataResponse<AddressResponse>> {
-        return this.requestMaker.makeRequest<Promise<DataResponse<AddressResponse>>>(`/v2/accounts/${accountId}/addresses`, HttpMethod.POST, name ? {name: name} : null)
+        return this.requestMaker.create<Promise<DataResponse<AddressResponse>>>(`/v2/accounts/${accountId}/addresses`, name ? {name: name} : null)
     }
 
     async showAddress(accountId: string, addressId: string): Promise<DataResponse<AddressResponse>> {
-        return this.requestMaker.makeRequest<Promise<DataResponse<AddressResponse>>>(`/v2/accounts/${accountId}/addresses/${addressId}`, HttpMethod.GET, null)
+        return this.requestMaker.read<Promise<DataResponse<AddressResponse>>>(`/v2/accounts/${accountId}/addresses/${addressId}`)
     }
 
 }

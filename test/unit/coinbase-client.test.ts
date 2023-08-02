@@ -1,5 +1,4 @@
 import {CoinbaseClient} from "../../src/client/coinbase.client";
-import {HttpMethod} from "../../src/shared/http/http-method";
 import {PaginateQuery} from "../../src/client/request/query/paginate.query";
 import {RequestMakerInterface} from "../../src/client/request/maker/request-maker.interface";
 
@@ -29,9 +28,16 @@ it('Should return a list of accounts', async () => {
     }
 
     const requestMaker: RequestMakerInterface = {
-        makeRequest: async <T>(path: string, method: keyof typeof HttpMethod, requestBody: any, paginationQuery?: PaginateQuery): Promise<T> => {
+        async create<T>(path: string, requestBody: any): Promise<T> {
+            return mockedResponse as unknown as T
+        }, async delete<T>(path: string): Promise<T> {
+            return mockedResponse as unknown as T
+        }, async read<T>(path: string, paginationQuery?: PaginateQuery): Promise<T> {
+            return mockedResponse as unknown as T
+        }, async update<T>(path: string, requestBody: any): Promise<T> {
             return mockedResponse as unknown as T
         }
+
     }
 
     const coinbaseClient = new CoinbaseClient(requestMaker)
