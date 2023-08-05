@@ -18,6 +18,7 @@ import { PaginatedBuyResponse } from './response/payload/buy/paginated-buy.respo
 import { BuyResponse } from './response/payload/buy/buy.response';
 import { PaginatedSellResponse } from './response/payload/sell/paginated-sell.response';
 import { SellResponse } from './response/payload/sell/sell.response';
+import { CryptoCurrenciesResponse } from './response/payload/crypto-currencies/crypto-currencies.response';
 
 export class CoinbaseClient {
   private requestMaker: RequestMakerInterface;
@@ -32,6 +33,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint does not require any permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-exchange-rates#get-exchange-rates
    */
   async getExchangeRates(
     currency: string,
@@ -46,6 +49,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:accounts:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-accounts#list-accounts
    */
   async listAccounts(
     paginateQuery?: PaginateQuery,
@@ -60,6 +65,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:accounts:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-accounts#show-an-account
    */
   async showAccount(accountId: string): Promise<DataResponse<AccountResponse>> {
     return this.requestMaker.read<Promise<DataResponse<AccountResponse>>>(
@@ -72,6 +79,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:accounts:update" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-accounts#update-account
    */
   async updateAccount(
     accountId: string,
@@ -93,6 +102,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:accounts:delete" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-accounts#delete-account
    */
   async deleteAccount(accountId: string): Promise<void> {
     return this.requestMaker.delete(`/v2/accounts/${accountId}`);
@@ -103,6 +114,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:addresses:create" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-addresses#create-address
    */
   async createAddress(
     accountId: string,
@@ -119,6 +132,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:addresses:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-addresses#show-address
    */
   async showAddress(
     accountId: string,
@@ -134,6 +149,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:transactions:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-transactions#list-transactions
    **/
   async listTransactions(
     accountId: string,
@@ -149,6 +166,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:addresses:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-transactions#show-a-transaction
    */
   async showTransaction(
     accountId: string,
@@ -166,6 +185,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:transactions:send" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-transactions#send-money
    */
   async sendMoney(
     accountId: string,
@@ -236,6 +257,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:transactions:transfer" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-transactions#transfer-money-between-accounts
    */
   async transferMoney(
     accountId: string,
@@ -266,6 +289,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:payment-methods:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-payment-methods#list-payment-methods
    */
   async listPaymentMethods(
     paginateQuery?: PaginateQuery,
@@ -280,6 +305,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:payment-methods:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-payment-methods#show-a-payment-method
    */
   async showPaymentMethod(
     paymentMethodId: string,
@@ -294,11 +321,29 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint does not require any permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-currencies#get-fiat-currencies
    */
   async getFiatCurrencies(): Promise<DataResponse<FiatCurrenciesResponse[]>> {
     return this.requestMaker.read<
       Promise<DataResponse<FiatCurrenciesResponse[]>>
     >(`/v2/currencies`);
+  }
+
+  /**
+   * Lists known cryptocurrencies.
+   *
+   * Permissions
+   * This endpoint does not require any permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-currencies#get-cryptocurrencies
+   */
+  async getCryptoCurrencies(): Promise<
+    DataResponse<CryptoCurrenciesResponse[]>
+  > {
+    return this.requestMaker.read<
+      Promise<DataResponse<CryptoCurrenciesResponse[]>>
+    >(`/v2/currencies/crypto`);
   }
 
   /**
@@ -321,6 +366,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint does not require any permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-prices#get-buy-price
    */
   async getBuyPrice(
     currencyPair: string,
@@ -339,6 +386,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint does not require any permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-prices#get-sell-price
    */
   async getSellPrice(
     currencyPair: string,
@@ -358,6 +407,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint does not require any permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-prices#get-spot-price
    */
   async getSpotPrice(
     currencyPair: string,
@@ -378,6 +429,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:buys:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-buys#list-buys
    */
   async listBuys(
     paginateQuery?: PaginateQuery,
@@ -392,6 +445,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:buys:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-buys#show-a-buy
    */
   async showBuy(buyId: string): Promise<DataResponse<BuyResponse>> {
     return this.requestMaker.read<Promise<DataResponse<BuyResponse>>>(
@@ -404,6 +459,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:buys:create" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-buys#place-buy-order
    */
   async placeBuy(
     amount: string,
@@ -448,6 +505,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:buys:create" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-buys#commit-a-buy
    */
   async commitBuy(buyId: string): Promise<DataResponse<BuyResponse>> {
     return this.requestMaker.update<Promise<DataResponse<BuyResponse>>>(
@@ -461,6 +520,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:sells:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-sells#list-sells
    */
   async listSells(
     paginateQuery?: PaginateQuery,
@@ -475,6 +536,8 @@ export class CoinbaseClient {
    *
    * Permissions
    * This endpoint requires the "wallet:sells:read" permission.
+   *
+   * @see https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-sells#show-a-sell
    */
   async showSell(sellId: string): Promise<DataResponse<SellResponse>> {
     return this.requestMaker.read<Promise<DataResponse<SellResponse>>>(

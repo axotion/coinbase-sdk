@@ -11,6 +11,7 @@ import {paginatedPaymentMethodDataProvider} from "./data-provider/paginated-paym
 import {fiatCurrencyDataProvider} from "./data-provider/fiat-currency.data-provider";
 import {timeDataProvider} from "./data-provider/time.data-provider";
 import {priceDataProvider} from "./data-provider/price.data-provider";
+import {cryptoCurrencyDataProvider} from "./data-provider/crypto-currency.data-provider";
 
 it('Should return a list of accounts', async () => {
     const coinbaseClient = new CoinbaseClient(createRequestMaker(paginatedAccountResponseDataProvider))
@@ -134,4 +135,10 @@ it('should get a spot price', async () => {
     const coinbaseClient = new CoinbaseClient(createRequestMaker(priceDataProvider))
     const response = await coinbaseClient.getSpotPrice('BTC-USD')
     expect(response).toStrictEqual(priceDataProvider);
+})
+
+it('should get crypto currencies', async () => {
+    const coinbaseClient = new CoinbaseClient(createRequestMaker(cryptoCurrencyDataProvider))
+    const response = await coinbaseClient.getCryptoCurrencies()
+    expect(response).toStrictEqual(cryptoCurrencyDataProvider);
 })
