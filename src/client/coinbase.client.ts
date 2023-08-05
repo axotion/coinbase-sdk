@@ -26,13 +26,13 @@ export class CoinbaseClient {
     this.requestMaker = requestMaker;
   }
 
-  /*
-        Get current exchange rates. Default base currency is USD but it can be defined as any supported currency (see Currencies endpoint).
-        Returned rates will define the exchange rate for one unit of the base currency.
-
-        Permissions
-        This endpoint does not require any permission.
-     */
+  /**
+   * Get current exchange rates. Default base currency is USD but it can be defined as any supported currency (see Currencies endpoint).
+   * Returned rates will define the exchange rate for one unit of the base currency.
+   *
+   * Permissions
+   * This endpoint does not require any permission.
+   */
   async getExchangeRates(
       currency: string,
   ): Promise<DataResponse<ExchangeRateResponse>> {
@@ -41,12 +41,12 @@ export class CoinbaseClient {
     );
   }
 
-  /*
-        List a current user's accounts to which the authentication method has access to.
-
-        Permissions
-        This endpoint requires the "wallet:accounts:read" permission.
-     */
+  /**
+   * List a current user's accounts to which the authentication method has access to.
+   *
+   * Permissions
+   * This endpoint requires the "wallet:accounts:read" permission.
+   */
   async listAccounts(
       paginateQuery?: PaginateQuery,
   ): Promise<PaginatedDataResponse<AccountResponse[]>> {
@@ -55,24 +55,24 @@ export class CoinbaseClient {
     >(`/v2/accounts`, paginateQuery);
   }
 
-  /*
-        Show (or get) a current user's account. To access the primary account for a given currency, a currency string (e.g., BTC or ETH) can be used instead of the account ID in the URL.
-
-        Permissions
-        This endpoint requires the "wallet:accounts:read" permission.
-     */
+  /**
+   * Show (or get) a current user's account. To access the primary account for a given currency, a currency string (e.g., BTC or ETH) can be used instead of the account ID in the URL.
+   *
+   * Permissions
+   * This endpoint requires the "wallet:accounts:read" permission.
+   */
   async showAccount(accountId: string): Promise<DataResponse<AccountResponse>> {
     return this.requestMaker.read<Promise<DataResponse<AccountResponse>>>(
         `/v2/accounts/${accountId}`,
     );
   }
 
-  /*
-        Modify a user's account.
-
-        Permissions
-        This endpoint requires the "wallet:accounts:update" permission.
-     */
+  /**
+   * Modify a user's account.
+   *
+   * Permissions
+   * This endpoint requires the "wallet:accounts:update" permission.
+   */
   async updateAccount(
       accountId: string,
       name: string,
@@ -83,27 +83,27 @@ export class CoinbaseClient {
     );
   }
 
-  /*
-        Remove a user's account. You cannot remove:
-
-        Primary accounts
-        Accounts with non-zero balance
-        Fiat accounts
-        Vaults with a pending withdrawal
-
-        Permissions
-        This endpoint requires the "wallet:accounts:delete" permission.
-     */
+  /**
+   * Remove a user's account. You cannot remove:
+   *
+   * - Primary accounts
+   * - Accounts with non-zero balance
+   * - Fiat accounts
+   * - Vaults with a pending withdrawal
+   *
+   * Permissions
+   * This endpoint requires the "wallet:accounts:delete" permission.
+   */
   async deleteAccount(accountId: string): Promise<void> {
     return this.requestMaker.delete(`/v2/accounts/${accountId}`);
   }
 
-  /*
-        Creates a new address for an account. Addresses can be created for wallet account types.
-
-        Permissions
-        This endpoint requires the "wallet:addresses:create" permission.
-     */
+  /**
+   * Creates a new address for an account. Addresses can be created for wallet account types.
+   *
+   * Permissions
+   * This endpoint requires the "wallet:addresses:create" permission.
+   */
   async createAddress(
       accountId: string,
       name?: string,
@@ -115,10 +115,10 @@ export class CoinbaseClient {
   }
 
   /**
-   *      Get a single address for an account. A regular cryptocurrency address can be used in place of address_id but the address must be associated with the correct account.
+   * Get a single address for an account. A regular cryptocurrency address can be used in place of address_id but the address must be associated with the correct account.
    *
-   *      Permissions
-   *      This endpoint requires the "wallet:addresses:read" permission.
+   * Permissions
+   * This endpoint requires the "wallet:addresses:read" permission.
    */
   async showAddress(
       accountId: string,

@@ -18,11 +18,11 @@ export class ApiKeyRequestMaker implements RequestMakerInterface {
     private readonly version = '2023-07-31';
 
     /*
-     Your timestamp must be within 30 seconds of the API service time, or your request will be considered expired and rejected.
-     If you think there is a time skew between your server and the API servers, use the time API endpoint to query for the API server time.
+           Your timestamp must be within 30 seconds of the API service time, or your request will be considered expired and rejected.
+           If you think there is a time skew between your server and the API servers, use the time API endpoint to query for the API server time.
 
-     ref: https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-key-authentication
-      */
+           ref: https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-key-authentication
+            */
     private readonly timeout = 1000 * 30;
 
     constructor(apiKey: string, apiSecret: string) {
