@@ -1,4 +1,4 @@
 export interface PriceResponse {
-    amount: string;
-    currency: string;
+  amount: string;
+  currency: string;
 }

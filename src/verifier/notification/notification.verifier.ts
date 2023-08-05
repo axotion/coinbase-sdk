@@ -1,8 +1,8 @@
-import {MissingHeaderException} from './exception/missing-header.exception';
+import { MissingHeaderException } from './exception/missing-header.exception';
 import * as path from 'path';
-import {readFileSync} from 'fs';
+import { readFileSync } from 'fs';
 import crypto from 'node:crypto';
-import {InvalidSignatureException} from './exception/invalid-signature.exception';
+import { InvalidSignatureException } from './exception/invalid-signature.exception';
 
 export class NotificationVerifier {
   private publicKey: string = null;
@@ -10,7 +10,7 @@ export class NotificationVerifier {
   async verify(request: Request): Promise<void | never> {
     if (!this.publicKey) {
       this.publicKey = readFileSync(
-          path.resolve('./key/coinbase.pub'),
+        path.resolve('./key/coinbase.pub'),
       ).toString();
     }
 

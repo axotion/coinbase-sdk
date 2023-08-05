@@ -1,4 +1,4 @@
 export interface TimeResponse {
-    iso: string;
-    epoch: number;
+  iso: string;
+  epoch: number;
 }

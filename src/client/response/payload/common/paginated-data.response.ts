@@ -1,4 +1,4 @@
-import {DataResponse} from './data.response';
+import { DataResponse } from './data.response';
 
 export interface PaginatedDataResponse<T extends any[]> {
   pagination: Pagination;

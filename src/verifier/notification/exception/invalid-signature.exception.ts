@@ -1,2 +1,1 @@
-export class InvalidSignatureException extends Error {
-}
+export class InvalidSignatureException extends Error {}

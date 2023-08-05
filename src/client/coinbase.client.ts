@@ -1,23 +1,23 @@
-import {DataResponse} from './response/payload/common/data.response';
-import {AddressResponse} from './response/payload/address/address.response';
-import {PaginatedDataResponse} from './response/payload/common/paginated-data.response';
-import {AccountResponse} from './response/payload/account/account.response';
-import {PaginateQuery} from './request/query/paginate.query';
-import {RequestMakerInterface} from './request/maker/request-maker.interface';
-import {ExchangeRateResponse} from './response/payload/exchange-rate/exchange-rate.response';
-import {PaginatedTransactionResponse} from './response/payload/transaction/paginated-transaction.response';
-import {TransactionResponse} from './response/payload/transaction/transaction.response';
-import {PayloadPreconditionFailedException} from './request/maker/exception/payload-precondition-failed.exception';
-import {PaginatedPaymentMethodResponse} from './response/payload/payment/paginated-payment-method.response';
-import {PaymentMethodResponse} from './response/payload/payment/payment-method.response';
-import {FiatCurrenciesResponse} from './response/payload/fiat-currencies/fiat-currencies.response';
-import {TimeResponse} from './response/payload/time/time.response';
-import {PriceResponse} from './response/payload/price/price.response';
-import {validateCurrencyPair} from './request/validator/currency-pair.validator';
-import {PaginatedBuyResponse} from './response/payload/buy/paginated-buy.response';
-import {BuyResponse} from './response/payload/buy/buy.response';
-import {PaginatedSellResponse} from './response/payload/sell/paginated-sell.response';
-import {SellResponse} from './response/payload/sell/sell.response';
+import { DataResponse } from './response/payload/common/data.response';
+import { AddressResponse } from './response/payload/address/address.response';
+import { PaginatedDataResponse } from './response/payload/common/paginated-data.response';
+import { AccountResponse } from './response/payload/account/account.response';
+import { PaginateQuery } from './request/query/paginate.query';
+import { RequestMakerInterface } from './request/maker/request-maker.interface';
+import { ExchangeRateResponse } from './response/payload/exchange-rate/exchange-rate.response';
+import { PaginatedTransactionResponse } from './response/payload/transaction/paginated-transaction.response';
+import { TransactionResponse } from './response/payload/transaction/transaction.response';
+import { PayloadPreconditionFailedException } from './request/maker/exception/payload-precondition-failed.exception';
+import { PaginatedPaymentMethodResponse } from './response/payload/payment/paginated-payment-method.response';
+import { PaymentMethodResponse } from './response/payload/payment/payment-method.response';
+import { FiatCurrenciesResponse } from './response/payload/fiat-currencies/fiat-currencies.response';
+import { TimeResponse } from './response/payload/time/time.response';
+import { PriceResponse } from './response/payload/price/price.response';
+import { validateCurrencyPair } from './request/validator/currency-pair.validator';
+import { PaginatedBuyResponse } from './response/payload/buy/paginated-buy.response';
+import { BuyResponse } from './response/payload/buy/buy.response';
+import { PaginatedSellResponse } from './response/payload/sell/paginated-sell.response';
+import { SellResponse } from './response/payload/sell/sell.response';
 
 export class CoinbaseClient {
   private requestMaker: RequestMakerInterface;
@@ -34,10 +34,10 @@ export class CoinbaseClient {
    * This endpoint does not require any permission.
    */
   async getExchangeRates(
-      currency: string,
+    currency: string,
   ): Promise<DataResponse<ExchangeRateResponse>> {
     return this.requestMaker.read<DataResponse<ExchangeRateResponse>>(
-        `/v2/exchange-rates?currency=${currency}`,
+      `/v2/exchange-rates?currency=${currency}`,
     );
   }
 
@@ -48,10 +48,10 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:accounts:read" permission.
    */
   async listAccounts(
-      paginateQuery?: PaginateQuery,
+    paginateQuery?: PaginateQuery,
   ): Promise<PaginatedDataResponse<AccountResponse[]>> {
     return this.requestMaker.read<
-        Promise<PaginatedDataResponse<AccountResponse[]>>
+      Promise<PaginatedDataResponse<AccountResponse[]>>
     >(`/v2/accounts`, paginateQuery);
   }
 
@@ -63,7 +63,7 @@ export class CoinbaseClient {
    */
   async showAccount(accountId: string): Promise<DataResponse<AccountResponse>> {
     return this.requestMaker.read<Promise<DataResponse<AccountResponse>>>(
-        `/v2/accounts/${accountId}`,
+      `/v2/accounts/${accountId}`,
     );
   }
 
@@ -74,12 +74,12 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:accounts:update" permission.
    */
   async updateAccount(
-      accountId: string,
-      name: string,
+    accountId: string,
+    name: string,
   ): Promise<DataResponse<AccountResponse>> {
     return this.requestMaker.update<Promise<DataResponse<AccountResponse>>>(
-        `/v2/accounts/${accountId}`,
-        {name: name},
+      `/v2/accounts/${accountId}`,
+      { name: name },
     );
   }
 
@@ -105,12 +105,12 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:addresses:create" permission.
    */
   async createAddress(
-      accountId: string,
-      name?: string,
+    accountId: string,
+    name?: string,
   ): Promise<DataResponse<AddressResponse>> {
     return this.requestMaker.create<Promise<DataResponse<AddressResponse>>>(
-        `/v2/accounts/${accountId}/addresses`,
-        name ? {name: name} : null,
+      `/v2/accounts/${accountId}/addresses`,
+      name ? { name: name } : null,
     );
   }
 
@@ -121,11 +121,11 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:addresses:read" permission.
    */
   async showAddress(
-      accountId: string,
-      addressId: string,
+    accountId: string,
+    addressId: string,
   ): Promise<DataResponse<AddressResponse>> {
     return this.requestMaker.read<Promise<DataResponse<AddressResponse>>>(
-        `/v2/accounts/${accountId}/addresses/${addressId}`,
+      `/v2/accounts/${accountId}/addresses/${addressId}`,
     );
   }
 
@@ -136,11 +136,11 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:transactions:read" permission.
    **/
   async listTransactions(
-      accountId: string,
-      paginateQuery?: PaginateQuery,
+    accountId: string,
+    paginateQuery?: PaginateQuery,
   ): Promise<PaginatedDataResponse<PaginatedTransactionResponse[]>> {
     return this.requestMaker.read<
-        Promise<PaginatedDataResponse<PaginatedTransactionResponse[]>>
+      Promise<PaginatedDataResponse<PaginatedTransactionResponse[]>>
     >(`/v2/accounts/${accountId}/transactions`, paginateQuery);
   }
 
@@ -151,11 +151,11 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:addresses:read" permission.
    */
   async showTransaction(
-      accountId: string,
-      transactionId: string,
+    accountId: string,
+    transactionId: string,
   ): Promise<DataResponse<TransactionResponse>> {
     return this.requestMaker.read<Promise<DataResponse<TransactionResponse>>>(
-        `/v2/accounts/${accountId}/transactions/${transactionId}`,
+      `/v2/accounts/${accountId}/transactions/${transactionId}`,
     );
   }
 
@@ -168,27 +168,27 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:transactions:send" permission.
    */
   async sendMoney(
-      accountId: string,
-      to: string,
-      amount: string,
-      currency: string,
-      options?: {
-        idem?: string;
-        toFinancialInstitution?: boolean;
-        financialInstitutionWebsite?: string;
-        memo?: string;
-        description?: string;
-        skipNotifications?: boolean;
-        destinationTag?: string;
-      },
+    accountId: string,
+    to: string,
+    amount: string,
+    currency: string,
+    options?: {
+      idem?: string;
+      toFinancialInstitution?: boolean;
+      financialInstitutionWebsite?: string;
+      memo?: string;
+      description?: string;
+      skipNotifications?: boolean;
+      destinationTag?: string;
+    },
   ): Promise<DataResponse<TransactionResponse>> {
     if (
-        options &&
-        options.toFinancialInstitution &&
-        !options.financialInstitutionWebsite
+      options &&
+      options.toFinancialInstitution &&
+      !options.financialInstitutionWebsite
     ) {
       throw new PayloadPreconditionFailedException(
-          'financialInstitutionWebsite is required when toFinancialInstitution is true',
+        'financialInstitutionWebsite is required when toFinancialInstitution is true',
       );
     }
 
@@ -222,12 +222,12 @@ export class CoinbaseClient {
     if (options && options.toFinancialInstitution) {
       payload['to_financial_institution'] = options.toFinancialInstitution;
       payload['financial_institution_website'] =
-          options.financialInstitutionWebsite;
+        options.financialInstitutionWebsite;
     }
 
     return this.requestMaker.create<Promise<DataResponse<TransactionResponse>>>(
-        `/v2/accounts/${accountId}/transactions`,
-        payload,
+      `/v2/accounts/${accountId}/transactions`,
+      payload,
     );
   }
 
@@ -238,11 +238,11 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:transactions:transfer" permission.
    */
   async transferMoney(
-      accountId: string,
-      to: string,
-      amount: string,
-      currency: string,
-      description?: string,
+    accountId: string,
+    to: string,
+    amount: string,
+    currency: string,
+    description?: string,
   ): Promise<DataResponse<TransactionResponse>> {
     const payload = {
       type: 'transfer',
@@ -256,8 +256,8 @@ export class CoinbaseClient {
     }
 
     return this.requestMaker.create<Promise<DataResponse<TransactionResponse>>>(
-        `/v2/accounts/${accountId}/transactions`,
-        payload,
+      `/v2/accounts/${accountId}/transactions`,
+      payload,
     );
   }
 
@@ -268,10 +268,10 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:payment-methods:read" permission.
    */
   async listPaymentMethods(
-      paginateQuery?: PaginateQuery,
+    paginateQuery?: PaginateQuery,
   ): Promise<PaginatedDataResponse<PaginatedPaymentMethodResponse[]>> {
     return this.requestMaker.read<
-        Promise<PaginatedDataResponse<PaginatedPaymentMethodResponse[]>>
+      Promise<PaginatedDataResponse<PaginatedPaymentMethodResponse[]>>
     >(`/v2/payment-methods`, paginateQuery);
   }
 
@@ -282,10 +282,10 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:payment-methods:read" permission.
    */
   async showPaymentMethod(
-      paymentMethodId: string,
+    paymentMethodId: string,
   ): Promise<DataResponse<PaymentMethodResponse>> {
     return this.requestMaker.read<Promise<DataResponse<PaymentMethodResponse>>>(
-        `/v2/payment-methods/${paymentMethodId}`,
+      `/v2/payment-methods/${paymentMethodId}`,
     );
   }
 
@@ -297,7 +297,7 @@ export class CoinbaseClient {
    */
   async getFiatCurrencies(): Promise<DataResponse<FiatCurrenciesResponse[]>> {
     return this.requestMaker.read<
-        Promise<DataResponse<FiatCurrenciesResponse[]>>
+      Promise<DataResponse<FiatCurrenciesResponse[]>>
     >(`/v2/currencies`);
   }
 
@@ -309,7 +309,7 @@ export class CoinbaseClient {
    */
   async getCurrentTime(): Promise<DataResponse<TimeResponse>> {
     return this.requestMaker.read<Promise<DataResponse<TimeResponse>>>(
-        `/v2/time`,
+      `/v2/time`,
     );
   }
 
@@ -323,11 +323,11 @@ export class CoinbaseClient {
    * This endpoint does not require any permission.
    */
   async getBuyPrice(
-      currencyPair: string,
+    currencyPair: string,
   ): Promise<DataResponse<PriceResponse>> {
     validateCurrencyPair(currencyPair);
     return this.requestMaker.read<Promise<DataResponse<PriceResponse>>>(
-        `/v2/prices/${currencyPair}/buy`,
+      `/v2/prices/${currencyPair}/buy`,
     );
   }
 
@@ -341,11 +341,11 @@ export class CoinbaseClient {
    * This endpoint does not require any permission.
    */
   async getSellPrice(
-      currencyPair: string,
+    currencyPair: string,
   ): Promise<DataResponse<PriceResponse>> {
     validateCurrencyPair(currencyPair);
     return this.requestMaker.read<Promise<DataResponse<PriceResponse>>>(
-        `/v2/prices/${currencyPair}/sell`,
+      `/v2/prices/${currencyPair}/sell`,
     );
   }
 
@@ -360,8 +360,8 @@ export class CoinbaseClient {
    * This endpoint does not require any permission.
    */
   async getSpotPrice(
-      currencyPair: string,
-      date?: Date,
+    currencyPair: string,
+    date?: Date,
   ): Promise<DataResponse<PriceResponse>> {
     validateCurrencyPair(currencyPair);
     let url = `/v2/prices/${currencyPair}/spot`;
@@ -380,10 +380,10 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:buys:read" permission.
    */
   async listBuys(
-      paginateQuery?: PaginateQuery,
+    paginateQuery?: PaginateQuery,
   ): Promise<PaginatedDataResponse<PaginatedBuyResponse[]>> {
     return this.requestMaker.read<
-        Promise<PaginatedDataResponse<PaginatedBuyResponse[]>>
+      Promise<PaginatedDataResponse<PaginatedBuyResponse[]>>
     >(`/v2/buys`, paginateQuery);
   }
 
@@ -395,7 +395,7 @@ export class CoinbaseClient {
    */
   async showBuy(buyId: string): Promise<DataResponse<BuyResponse>> {
     return this.requestMaker.read<Promise<DataResponse<BuyResponse>>>(
-        `/v2/buys/${buyId}`,
+      `/v2/buys/${buyId}`,
     );
   }
 
@@ -406,14 +406,14 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:buys:create" permission.
    */
   async placeBuy(
-      amount: string,
-      currency: string,
-      paymentMethodId: string,
-      options?: {
-        commit?: boolean;
-        quote?: string;
-        agree_btc_amount_varies?: boolean;
-      },
+    amount: string,
+    currency: string,
+    paymentMethodId: string,
+    options?: {
+      commit?: boolean;
+      quote?: string;
+      agree_btc_amount_varies?: boolean;
+    },
   ): Promise<DataResponse<BuyResponse>> {
     const payload = {
       amount: amount,
@@ -434,8 +434,8 @@ export class CoinbaseClient {
     }
 
     return this.requestMaker.create<Promise<DataResponse<BuyResponse>>>(
-        `/v2/buys`,
-        payload,
+      `/v2/buys`,
+      payload,
     );
   }
 
@@ -451,8 +451,8 @@ export class CoinbaseClient {
    */
   async commitBuy(buyId: string): Promise<DataResponse<BuyResponse>> {
     return this.requestMaker.update<Promise<DataResponse<BuyResponse>>>(
-        `/v2/buys/${buyId}/commit`,
-        {},
+      `/v2/buys/${buyId}/commit`,
+      {},
     );
   }
 
@@ -463,10 +463,10 @@ export class CoinbaseClient {
    * This endpoint requires the "wallet:sells:read" permission.
    */
   async listSells(
-      paginateQuery?: PaginateQuery,
+    paginateQuery?: PaginateQuery,
   ): Promise<PaginatedDataResponse<PaginatedSellResponse[]>> {
     return this.requestMaker.read<
-        Promise<PaginatedDataResponse<PaginatedSellResponse[]>>
+      Promise<PaginatedDataResponse<PaginatedSellResponse[]>>
     >(`/v2/sells`, paginateQuery);
   }
 
@@ -478,7 +478,7 @@ export class CoinbaseClient {
    */
   async showSell(sellId: string): Promise<DataResponse<SellResponse>> {
     return this.requestMaker.read<Promise<DataResponse<SellResponse>>>(
-        `/v2/sells/${sellId}`,
+      `/v2/sells/${sellId}`,
     );
   }
 }
