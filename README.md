@@ -84,7 +84,7 @@ await notificationVerifier.verify(request)
 - [x] prices
 - [ ] sells - In progress
 - [x] transactions
-- [ ] ~~users~~ - **Will not be supported**
+- [ ] users - **In progress**
 - [ ] withdrawals - **In progress**
 - [x] exchange_rates
 - [x] time
