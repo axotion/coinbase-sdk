@@ -1,8 +1,8 @@
 import {DataResponse} from "./data.response";
 
-export interface PaginatedDataResponse<T> {
+export interface PaginatedDataResponse<T extends any[]> {
     pagination: Pagination
-    data: DataResponse<T>[]
+    data: DataResponse<T>
 }
 
 export interface Pagination {

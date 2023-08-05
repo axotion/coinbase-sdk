@@ -30,10 +30,10 @@ npm i coinbase-sdk
 ## Usage of Client
 
 ```typescript
-import { CoinbaseClient, HttpRequestMaker } from 'coinbase-sdk';
+import {CoinbaseClient, ApiKeyRequestMaker} from 'coinbase-sdk';
 
 const coinbaseClient = new CoinbaseClient(
-    new HttpRequestMaker(
+    new ApiKeyRequestMaker(
         'apikey', 'apisecret'
     )
 );
@@ -57,25 +57,22 @@ await notificationVerifier.verify(request)
 
 ```
 
-## Supported methods 
+## Supported client methods
 
 - [x] accounts
 - [x] addresses
-- [ ] buys
-- [ ] checkouts
-- [ ] current_user
+- [x] buys
 - [ ] deposits
-- [ ] notifications
-- [ ] orders
-- [ ] payment_methods
-- [ ] prices
-- [ ] reports
+- [x] payment_methods
+- [x] prices
 - [ ] sells
-- [ ] transactions
-- [ ] transfers
+- [x] transactions
 - [ ] users
 - [ ] withdrawals
 - [x] exchange_rates
+- [x] time
+- [x] currencies
+- [x] prices
 
 ## How to run tests
 ```bash

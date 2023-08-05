@@ -29,11 +29,15 @@ it('Should throw an invalid request if code is higher than 299', async () => {
         }
     }
 
+    let actualException = null;
+
     try {
         await validateResponse(mockedResponse as Response)
-    } catch (error) {
-        expect(error).toBeInstanceOf(InvalidResponseException)
+    } catch (exception) {
+        actualException = exception;
     }
+
+    expect(actualException).toBeInstanceOf(InvalidResponseException)
 });
 
 it('Should throw an invalid request if code is lower than 200', async () => {
@@ -47,9 +51,13 @@ it('Should throw an invalid request if code is lower than 200', async () => {
         }
     }
 
+    let actualException = null;
+
     try {
         await validateResponse(mockedResponse as Response)
-    } catch (error) {
-        expect(error).toBeInstanceOf(InvalidResponseException)
+    } catch (exception) {
+        actualException = exception;
     }
+
+    expect(actualException).toBeInstanceOf(InvalidResponseException)
 });

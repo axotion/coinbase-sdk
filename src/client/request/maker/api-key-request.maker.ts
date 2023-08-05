@@ -9,7 +9,7 @@ import {validateResponse} from "../../response/validator/response.validator";
 import {RequestMakerInterface} from "./request-maker.interface";
 
 
-export class HttpRequestMaker implements RequestMakerInterface {
+export class ApiKeyRequestMaker implements RequestMakerInterface {
 
     private readonly baseUrl = 'https://api.coinbase.com'
 

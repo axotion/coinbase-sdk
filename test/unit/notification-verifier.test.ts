@@ -71,10 +71,14 @@ it('Should throw error because of invalid signature in response', async () => {
     }
 
     const notificationVerifier = new NotificationVerifier();
+    let actualException = null;
 
     try {
         await notificationVerifier.verify(mockedRequest as unknown as Request)
     } catch (exception) {
-        expect(exception).toBeInstanceOf(InvalidSignatureException)
+        actualException = exception;
     }
+
+    expect(actualException).toBeInstanceOf(InvalidSignatureException)
+
 })
