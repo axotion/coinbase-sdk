@@ -1,6 +1,6 @@
 {
   "name": "coinbase-sdk",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Library for Coinbase API",
   "main": "src/index.js",
   "scripts": {
