@@ -1,5 +1,5 @@
-import { validateResponse } from '../../src/client/response/validator/response.validator';
 import { InvalidResponseException } from '../../src/client/response/validator/exception/invalid-response.exception';
+import { validateResponse } from '../../src/client/response/validator/response.validator';
 
 it('Should accept response if status code is 200', async () => {
   const mockedResponse = {
