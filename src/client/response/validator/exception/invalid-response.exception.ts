@@ -1,5 +1,4 @@
 export class InvalidResponseException extends Error {
-
     public response: string;
 
     public path: string;
@@ -9,5 +8,4 @@ export class InvalidResponseException extends Error {
         this.response = response;
         this.path = path;
     }
-
 }

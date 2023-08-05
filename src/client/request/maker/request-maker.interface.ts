@@ -1,4 +1,4 @@
-import {PaginateQuery} from "../query/paginate.query";
+import {PaginateQuery} from '../query/paginate.query';
 
 export interface RequestMakerInterface {
     create<T>(path: string, requestBody: any): Promise<T>;

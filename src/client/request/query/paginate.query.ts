@@ -1,6 +1,6 @@
 export interface PaginateQuery {
     limit?: number;
-    order?: "asc" | "desc";
+    order?: 'asc' | 'desc';
     starting_after?: string;
     ending_before?: string;
 }

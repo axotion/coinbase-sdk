@@ -1,30 +1,28 @@
-import {HttpMethod} from "../../../shared/http/http-method";
-import {PaginateQuery} from "../query/paginate.query";
-import {getCurrentTimestamp} from "../../../shared/time/get-current-timestamp";
-import {buildQuery} from "../query/query.builder";
-import {signRequest} from "../signer/request.signer";
-import {parseRequestBody} from "../parser/request-body.parser";
-import {RequestTimedOutException} from "./exception/request-timed-out.exception";
-import {validateResponse} from "../../response/validator/response.validator";
-import {RequestMakerInterface} from "./request-maker.interface";
-
+import {HttpMethod} from '../../../shared/http/http-method';
+import {PaginateQuery} from '../query/paginate.query';
+import {getCurrentTimestamp} from '../../../shared/time/get-current-timestamp';
+import {buildQuery} from '../query/query.builder';
+import {signRequest} from '../signer/request.signer';
+import {parseRequestBody} from '../parser/request-body.parser';
+import {RequestTimedOutException} from './exception/request-timed-out.exception';
+import {validateResponse} from '../../response/validator/response.validator';
+import {RequestMakerInterface} from './request-maker.interface';
 
 export class ApiKeyRequestMaker implements RequestMakerInterface {
-
-    private readonly baseUrl = 'https://api.coinbase.com'
+    private readonly baseUrl = 'https://api.coinbase.com';
 
     private readonly apiKey: string;
 
     private readonly apiSecret: string;
 
-    private readonly version = '2023-07-31'
+    private readonly version = '2023-07-31';
 
     /*
-   Your timestamp must be within 30 seconds of the API service time, or your request will be considered expired and rejected.
-   If you think there is a time skew between your server and the API servers, use the time API endpoint to query for the API server time.
+     Your timestamp must be within 30 seconds of the API service time, or your request will be considered expired and rejected.
+     If you think there is a time skew between your server and the API servers, use the time API endpoint to query for the API server time.
 
-   ref: https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-key-authentication
-    */
+     ref: https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-key-authentication
+      */
     private readonly timeout = 1000 * 30;
 
     constructor(apiKey: string, apiSecret: string) {
@@ -33,26 +31,31 @@ export class ApiKeyRequestMaker implements RequestMakerInterface {
     }
 
     async create<T>(path: string, requestBody: any): Promise<T> {
-        return this.makeRequest<T>(path, HttpMethod.POST, requestBody)
+        return this.makeRequest<T>(path, HttpMethod.POST, requestBody);
     }
 
     async read<T>(path: string, paginationQuery?: PaginateQuery): Promise<T> {
-        return this.makeRequest<T>(path, HttpMethod.GET, null, paginationQuery)
+        return this.makeRequest<T>(path, HttpMethod.GET, null, paginationQuery);
     }
 
     async update<T>(path: string, requestBody: any): Promise<T> {
-        return this.makeRequest<T>(path, HttpMethod.PUT, requestBody)
+        return this.makeRequest<T>(path, HttpMethod.PUT, requestBody);
     }
 
     async delete<T>(path: string): Promise<T> {
-        return this.makeRequest<T>(path, HttpMethod.DELETE, null)
+        return this.makeRequest<T>(path, HttpMethod.DELETE, null);
     }
 
-    private async makeRequest<T>(path: string, method: keyof typeof HttpMethod, requestBody: any, paginationQuery?: PaginateQuery): Promise<T> {
-        const currentTimestamp = getCurrentTimestamp()
+    private async makeRequest<T>(
+        path: string,
+        method: keyof typeof HttpMethod,
+        requestBody: any,
+        paginationQuery?: PaginateQuery,
+    ): Promise<T> {
+        const currentTimestamp = getCurrentTimestamp();
 
         if (paginationQuery) {
-            path += buildQuery(paginationQuery)
+            path += buildQuery(paginationQuery);
         }
 
         const abortController = new AbortController();
@@ -63,32 +66,36 @@ export class ApiKeyRequestMaker implements RequestMakerInterface {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
-                    'CB-ACCESS-SIGN': signRequest(this.apiSecret, currentTimestamp, method, path, requestBody ? parseRequestBody(requestBody) : ''),
+                    'CB-ACCESS-SIGN': signRequest(
+                        this.apiSecret,
+                        currentTimestamp,
+                        method,
+                        path,
+                        requestBody ? parseRequestBody(requestBody) : '',
+                    ),
                     'CB-ACCESS-TIMESTAMP': currentTimestamp.toString(),
                     'CB-ACCESS-KEY': this.apiKey,
-                    'CB-VERSION': this.version
+                    'CB-VERSION': this.version,
                 },
                 signal: abortController.signal,
-            }
+            };
 
             if (requestBody) {
-                requestOptions['body'] = requestBody ? parseRequestBody(requestBody) : ''
+                requestOptions['body'] = requestBody
+                    ? parseRequestBody(requestBody)
+                    : '';
             }
 
-            const rawResponse = await fetch(`${this.baseUrl}${path}`, requestOptions)
-            return await validateResponse(rawResponse) as T
+            const rawResponse = await fetch(`${this.baseUrl}${path}`, requestOptions);
+            return (await validateResponse(rawResponse)) as T;
         } catch (exception) {
-
             if (exception instanceof DOMException) {
-                throw new RequestTimedOutException('Request timeout')
+                throw new RequestTimedOutException('Request timeout');
             }
 
             throw exception;
-
         } finally {
             clearTimeout(timeoutId);
         }
     }
-
 }
-
