@@ -1,6 +1,6 @@
 # Coinbase SDK
 
-Coinbase SDK without external dependencies. Based purely on fetch API, this implementation ensures that the SDK remains lightweight and self-contained, without relying on any third-party libraries or modules for handling HTTP requests and other functionalities.
+Coinbase Sign-in SDK (https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/welcome) without external dependencies. Based purely on fetch API, this implementation ensures that the SDK remains lightweight and self-contained, without relying on any third-party libraries or modules for handling HTTP requests and other functionalities.
 
 ## Features
 - [x] Typescript support
