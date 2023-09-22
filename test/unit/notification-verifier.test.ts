@@ -6,9 +6,7 @@ it('Should verify notification with valid signature in response', async () => {
   const mockedRequest = {
     status: 200,
     headers: {
-      get: () => {
-        return '6yQRl17CNj5YSHSpF+tLjb0vVsNVEv021Tyy1bTVEQ69SWlmhwmJYuMc7jiDyeW9TLy4vRqSh4g4YEyN8eoQIM57pMoNw6Lw6Oudubqwp+E3cKtLFxW0l18db3Z/vhxn5BScAutHWwT/XrmkCNaHyCsvOOGMekwrNO7mxX9QIx21FBaEejJeviSYrF8bG6MbmFEs2VGKSybf9YrElR8BxxNe/uNfCXN3P5tO8MgR5wlL3Kr4yq8e6i4WWJgD08IVTnrSnoZR6v8JkPA+fn7I0M6cy0Xzw3BRMJAvdQB97wkobu97gFqJFKsOH2u/JR1S/UNP26vL0mzuAVuKAUwlRn0SUhWEAgcM3X0UCtWLYfCIb5QqrSHwlp7lwOkVnFt329Mrpjy+jAfYYSRqzIsw4ZsRRVauy/v3CvmjPI9sUKiJ5l1FSgkpK2lkjhFgKB3WaYZWy9ZfIAI9bDyG8vSTT7IDurlUhyTweDqVNlYUsO6jaUa4KmSpg1o9eIeHxm0XBQ2c0Lv/T39KNc/VOAi1LBfPiQYMXD1e/8VuPPBTDGgzOMD3i334ppSr36+8YtApAn3D36Hr9jqAfFrugM7uPecjCGuleWsHFyNnJErT0/amIt24Nh1GoiESEq42o7Co4wZieKZ+/yeAlIUErJzK41ACVGmTnGoDUwEBXxADOdA=';
-      },
+      'CB-SIGNATURE' : '6yQRl17CNj5YSHSpF+tLjb0vVsNVEv021Tyy1bTVEQ69SWlmhwmJYuMc7jiDyeW9TLy4vRqSh4g4YEyN8eoQIM57pMoNw6Lw6Oudubqwp+E3cKtLFxW0l18db3Z/vhxn5BScAutHWwT/XrmkCNaHyCsvOOGMekwrNO7mxX9QIx21FBaEejJeviSYrF8bG6MbmFEs2VGKSybf9YrElR8BxxNe/uNfCXN3P5tO8MgR5wlL3Kr4yq8e6i4WWJgD08IVTnrSnoZR6v8JkPA+fn7I0M6cy0Xzw3BRMJAvdQB97wkobu97gFqJFKsOH2u/JR1S/UNP26vL0mzuAVuKAUwlRn0SUhWEAgcM3X0UCtWLYfCIb5QqrSHwlp7lwOkVnFt329Mrpjy+jAfYYSRqzIsw4ZsRRVauy/v3CvmjPI9sUKiJ5l1FSgkpK2lkjhFgKB3WaYZWy9ZfIAI9bDyG8vSTT7IDurlUhyTweDqVNlYUsO6jaUa4KmSpg1o9eIeHxm0XBQ2c0Lv/T39KNc/VOAi1LBfPiQYMXD1e/8VuPPBTDGgzOMD3i334ppSr36+8YtApAn3D36Hr9jqAfFrugM7uPecjCGuleWsHFyNnJErT0/amIt24Nh1GoiESEq42o7Co4wZieKZ+/yeAlIUErJzK41ACVGmTnGoDUwEBXxADOdA='
     },
     json: async () => {
       return {
@@ -39,16 +37,14 @@ it('Should verify notification with valid signature in response', async () => {
   };
 
   const notificationVerifier = new NotificationVerifier();
-  await notificationVerifier.verify(mockedRequest as unknown as Request);
+  await notificationVerifier.verify(JSON.stringify(await mockedRequest.json()), mockedRequest.headers['CB-SIGNATURE']);
 });
 
 it('Should throw error because of invalid signature in response', async () => {
   const mockedRequest = {
     status: 200,
     headers: {
-      get: () => {
-        return 'JBFeNj5YSHQXSy9WVRI2PNW0EQ5JaWYJYhw4TBo4YEwQIHsKw6Lrnbk3cEsXFV8db3Z/HGcUAkdbBF4I1ocrLzh6TCs0f1AjHRQWejJeJF8bGxtRLFFLJsSVHwETXl8Jc3c/ThEJS9yqyq8eLhZYAxVOetKeUQk+fn7OnEVwUTAvde+/vX0JKG57WhQOH2slHVJDT9urbAFbAUwlRn0SUhUCBwx9FArVi2FvKiEVW3crPAdhJGrMizARRVYKPGxQXUVKCSkraWQRYCgdaVZfIAI9bDxPA1QkeDo2VhRpRipkWj14bRcFCtC7T39KNTgILBfPiQYMXD1ebjxTDGgzOH3fr2IpAn3foTp8Wj0jCGt5awcXI2ckSiLduDYdRiESEjYGYnh+JwRQAlRpagMBAV8QAzk=';
-      },
+      'CB-SIGNATURE' : 'JBFeNj5YSHQXSy9WVRI2PNW0EQ5JaWYJYhw4TBo4YEwQIHsKw6Lrnbk3cEsXFV8db3Z/HGcUAkdbBF4I1ocrLzh6TCs0f1AjHRQWejJeJF8bGxtRLFFLJsSVHwETXl8Jc3c/ThEJS9yqyq8eLhZYAxVOetKeUQk+fn7OnEVwUTAvde+/vX0JKG57WhQOH2slHVJDT9urbAFbAUwlRn0SUhUCBwx9FArVi2FvKiEVW3crPAdhJGrMizARRVYKPGxQXUVKCSkraWQRYCgdaVZfIAI9bDxPA1QkeDo2VhRpRipkWj14bRcFCtC7T39KNTgILBfPiQYMXD1ebjxTDGgzOH3fr2IpAn3foTp8Wj0jCGt5awcXI2ckSiLduDYdRiESEjYGYnh+JwRQAlRpagMBAV8QAzk='
     },
     json: async () => {
       return {
@@ -82,7 +78,7 @@ it('Should throw error because of invalid signature in response', async () => {
   let actualException = null;
 
   try {
-    await notificationVerifier.verify(mockedRequest as unknown as Request);
+    await notificationVerifier.verify(JSON.stringify(await mockedRequest.json()), mockedRequest.headers['CB-SIGNATURE']);
   } catch (exception) {
     actualException = exception;
   }

@@ -68,9 +68,8 @@ import { NotificationVerifier } from 'coinbase-sdk';
 
 const notificationVerifier = new NotificationVerifier();
 
-// Request from express / koa / pure nodejs
 // Will throw InvalidSignatureException if signature is invalid
-await notificationVerifier.verify(request)
+await notificationVerifier.verify(jsonBody, cbSignatureHeader)
 
 ```
 

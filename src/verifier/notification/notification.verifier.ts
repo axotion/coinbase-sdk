@@ -7,26 +7,23 @@ import { InvalidSignatureException } from './exception/invalid-signature.excepti
 export class NotificationVerifier {
   private publicKey: string = null;
 
-  async verify(request: Request): Promise<void | never> {
+  async verify(jsonBody: string, cbSignatureHeader: string): Promise<void | never> {
     if (!this.publicKey) {
       this.publicKey = readFileSync(
-        path.resolve('./key/coinbase.pub'),
+        path.resolve(__dirname + '/coinbase.pub'),
       ).toString();
     }
 
-    const signatureToBeValidated = request.headers.get('CB-SIGNATURE');
 
-    if (!signatureToBeValidated) {
+    if (!cbSignatureHeader || cbSignatureHeader === '') {
       throw new MissingHeaderException('CB-SIGNATURE header is missing');
     }
 
-    const jsonBody = await request.json();
-    const bodyToBeValidated = JSON.stringify(jsonBody);
-
+   
     const verifier = crypto.createVerify('RSA-SHA256');
-    verifier.update(bodyToBeValidated);
+    verifier.update(jsonBody);
 
-    if (!verifier.verify(this.publicKey, signatureToBeValidated, 'base64')) {
+    if (!verifier.verify(this.publicKey, cbSignatureHeader, 'base64')) {
       throw new InvalidSignatureException('Signature is invalid');
     }
   }
