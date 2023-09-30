@@ -26,13 +26,13 @@ export interface NativeAmount {
 
 export interface Network {
   status: string;
+  hash: string;
   name: string;
 }
 
 export interface To {
-  id: string;
   resource: string;
-  resource_path: string;
+  address: string;
 }
 
 export interface Details {
